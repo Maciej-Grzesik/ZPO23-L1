@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 /**
-* Komentarz dokumentacyjny
+* Klasa obliczająca maksymalną wysokość i zasięg rzutu ukośnego
 */
 public class Ex1 {
     public static void main(String[] args) {
@@ -18,8 +18,8 @@ public class Ex1 {
         if (v0 < 0 || angle < 0 || angle > 90) {
             System.out.println("Nieprawidłowe dane wejściowe.");
         } else {
-            double distance = (Math.pow(v0, 2) * Math.sin(2 * angle)) / 9.81;
-            double maxHeight = (Math.pow(v0, 2) * Math.sin(2 * angle) * Math.sin(2 * angle) / (2 * 9.81));
+            double distance = (Math.pow(v0, 2) * Math.sin(2 * angle_radian)) / 9.81;
+            double maxHeight = (Math.pow(v0, 2) * Math.sin(angle_radian) * Math.sin(angle_radian) / (2 * 9.81));
 
             System.out.println("Zasięg: " + distance + " m");
             System.out.println("Maksymalna wysokość: " + maxHeight + " m");
