@@ -1,5 +1,7 @@
 import java.util.Scanner;
-
+/**
+* Klasa przyjmujaca wsp. dwoch punktow a nastepnie wyswietlajaca rownanie prostej przechodzacej przez te punkty
+*/
 public class Ex5 {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -21,7 +23,10 @@ public class Ex5 {
         }
     }
 
-    public static double[] wspolczynniki(double pierwszyPunktX, double pierwszyPunktY, double drugiPunktX, double drugiPunktY) {
+    /**
+    * Metoda obliczajaca wsp. dopasowania liniowego dla dwoch puntkow
+    */
+    public static double[] wspolczynniki(double pierwszyPunktX, double drugiPunktX, double pierwszyPunktY, double drugiPunktY) {
         if ((drugiPunktX == pierwszyPunktX) && (drugiPunktY == pierwszyPunktY)){
             throw new IllegalArgumentException("Współrzędne punktów nie mogą być takie same.");
         }
