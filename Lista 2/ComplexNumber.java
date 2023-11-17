@@ -72,8 +72,8 @@ class ComplexNumber extends Vector2D {
      * @return wynik mnozenia dwoch liczb zespolonych
      */
     public static ComplexNumber multiply(ComplexNumber cn1, ComplexNumber cn2) {
+        double Re = cn1.Re() * cn2.Re() - cn1.Im() * cn2.Im();
         double Im = cn1.Re() * cn2.Im() + cn1.Im() * cn2.Re();
-        double Re = cn1.Re() * cn2.Re() - Im * cn2.Im();
         return new ComplexNumber(Re, Im);
     }
     /**
