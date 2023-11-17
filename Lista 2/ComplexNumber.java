@@ -129,4 +129,39 @@ class ComplexNumber extends Vector2D {
     public String toString() {
         return getX() + " + " + "i" + getY();
     }
+    /**
+     * Metoda pozwalajaca wprowadzic wartosci liczby zespolonej
+     * @return nowa liczba zespolona
+     * @throws InvalidComplexNumberFormat kiedy liczba zespolona wpisana jest w zlym formacie
+     */
+    public static ComplexNumber Input() throws InvalidComplexNumberFormat {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Podaj liczbe zespolona:");
+        String input = scanner.nextLine().trim();
+
+        String patternRe = "^([-+]?[0-9]*\\.?[0-9]+)$";
+        String patternComplex = "^([-+]?[0-9]*\\.?[0-9]+)?\\s*([-+])?\\s*i\\s*([-+]?[0-9]*\\.?[0-9]*)?$";
+
+        Pattern Real = Pattern.compile(patternRe);
+        Pattern Complex = Pattern.compile(patternComplex);
+
+        Matcher matchRe = Real.matcher(input);
+        Matcher matchComplex = Complex.matcher(input);
+
+        if (matchRe.find()) {
+            double real = Double.parseDouble(input);
+            return new ComplexNumber(real, 0); // Tworzenie liczby zespolonej z częścią rzeczywistą
+        } else if (matchComplex.find()) {
+            double real = Double.parseDouble(matchComplex.group(1) != null ? matchComplex.group(1) : "0");
+            double imaginary = Double.parseDouble(matchComplex.group(3) != null ? matchComplex.group(3) : "0");
+
+            if (matchComplex.group(2) != null && matchComplex.group(2).equals("-")) {
+                imaginary *= -1; // Zmiana znaku części urojonej, jeśli jest "-"
+            }
+
+            return new ComplexNumber(real, imaginary); // Tworzenie liczby zespolonej z częścią rzeczywistą i urojoną
+        } else {
+            throw new InvalidComplexNumberFormat("Nieprawidłowy format liczby zespolonej");
+        }
+    }
 }
