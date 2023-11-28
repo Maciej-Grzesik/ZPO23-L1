@@ -2,6 +2,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+
 public class Courses {
     private Map<String, Subject> courses;
 
@@ -19,8 +20,8 @@ public class Courses {
      * @param hours ilosc godzin
      * @param semester semest
      */
-    public void addSubject(String name, int ects, int hours, int semester){
-        Subject add = new Subject(ects, hours, semester);
+    public void addSubject(String name, int ects, int hours, int semester, LessonType lessonType, CompletionType completionType) {
+        Subject add = new Subject(ects, hours, semester, lessonType, completionType);
         courses.put(name, add);
     }
 

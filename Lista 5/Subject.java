@@ -1,23 +1,25 @@
+public enum LessonType {
+    LECTURE, EXERCISES, LABORATORY
+}
+
+
+public enum CompletionType {
+    EXAM, CREDIT 
+}
+
+
 public class Subject {
     private int ects;
     private int hours;
     private int semester;
+    private LessonType lessonType;
+    private CompletionType completionType;
 
-    public Subject(int ects, int hours, int semester){
+    public Subject(int ects, int hours, int semester, LessonType lessonType, CompletionType completionType) {
         this.ects = ects;
         this.hours = hours;
         this.semester = semester;
-    }
-    public int getEcts() {
-        return ects;
-    }
-    public int getHours() {
-        return hours;
-    }
-    public int getSemester() {
-        return semester;
-    }
-    public String toString() {
-        return ", ECTS: " + ects + ", Godziny: " + hours + ", Semestr: " + semester;
+        this.lessonType = lessonType;
+        this.completionType = completionType;
     }
 }
