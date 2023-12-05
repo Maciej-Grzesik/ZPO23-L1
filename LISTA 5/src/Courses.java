@@ -2,6 +2,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+
 public class Courses {
     private Map<String, Subject> courses;
 
@@ -19,8 +20,8 @@ public class Courses {
      * @param hours ilosc godzin
      * @param semester semest
      */
-    public void addSubject(String name, int ects, int hours, int semester){
-        Subject add = new Subject(ects, hours, semester);
+    public void addSubject(String name, int ects, int hours, int semester, LessonType lessonType, CompletionType completionType) {
+        Subject add = new Subject(ects, hours, semester, lessonType, completionType);
         courses.put(name, add);
     }
 
@@ -71,5 +72,31 @@ public class Courses {
         } else {
             throw new IllegalArgumentException("There's no course under the name: " + name);
         }
+    }
+    /**
+     * Metoda wykorzystująca strumienie do podliczenia calkowitej liczby godzin danego typu zajec
+     * oraz sumy godzin i punktow ECTS zajec konczacych sie egzaminem
+     *
+     * @param lessonType Typ zajec, dla ktorego chcemy obliczyc calkowita liczbe godzin
+     */
+    public void calculateHoursAndECTSSum(LessonType lessonType) {
+        long totalHoursOfType = courses.values().stream()
+                .filter(subject -> subject.getLessonType() == lessonType)
+                .mapToLong(Subject::getHours)
+                .sum();
+
+        long totalHoursAndECTSOfExamSubjects = courses.values().stream()
+                .filter(subject -> subject.getCompletionType() == CompletionType.EXAM)
+                .mapToLong(Subject::getHours)
+                .sum();
+
+        int totalECTSOfExamSubjects = courses.values().stream()
+                .filter(subject -> subject.getCompletionType() == CompletionType.EXAM)
+                .mapToInt(Subject::getEcts)
+                .sum();
+
+        System.out.println("Total hours of " + lessonType + ": " + totalHoursOfType);
+        System.out.println("Total hours of subjects ending with exam: " + totalHoursAndECTSOfExamSubjects);
+        System.out.println("Total ECTS of subjects ending with exam: " + totalECTSOfExamSubjects);
     }
 }

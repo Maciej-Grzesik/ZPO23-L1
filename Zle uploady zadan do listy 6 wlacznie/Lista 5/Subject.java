@@ -1,4 +1,18 @@
 /**
+ * Typ wyliczeniowy reprezentujący rodzaj zajec
+ */
+public enum LessonType {
+    LECTURE, EXERCISES, LABORATORY
+}
+
+/**
+ * Typ wyliczeniowy reprezentujący typ zaliczenia przedmiotu
+ */
+public enum CompletionType {
+    EXAM, CREDIT 
+}
+
+/**
  * Klasa reprezentująca przedmiot w programie studiów
  */
 public class Subject {
