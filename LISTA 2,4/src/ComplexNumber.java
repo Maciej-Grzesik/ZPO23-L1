@@ -162,6 +162,13 @@ class ComplexNumber extends Vector2D {
             throw new InvalidComplexNumberFormat("Nieprawidłowy format liczby zespolonej");
         }
     }
+
+    /**
+     * Metoda odczytująca zawartość pliku o formacie podanym w zadaniu
+     * @param filepath str: sciezka do pliku
+     * @return Posortowana Mape względem kluczy (czasu) z wartościami odpowiadającymi liczbom zespolonym
+     * @throws IOException podczas błedu odczytu input/output
+     */
     public static Map<Double, ComplexNumber> readFromFile(String filepath){
         File data = new File(filepath);
         Map<Double, ComplexNumber> time_complex = new HashMap<>();
@@ -196,6 +203,14 @@ class ComplexNumber extends Vector2D {
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
                         (oldValue, newValue) -> oldValue, LinkedHashMap::new));
     }
+
+    /**
+     * Metoda zapisujaca do pliku wartosci czasu modulu i ergumentu dla zbioru liczb zespolonych
+     * @param filepath str: sciezka do pliku
+     * @param overwrite bool: true - jesli plik ma byc nadpisany w przeciwnym wypadku false
+     * @param time_complex Map<Double, ComplexNumber>: mapa z czasem jako klucz i wartością ComplexNumber
+     * @throws IOException podczas błedu odczytu input/output
+     */
     public static void saveToFile(String filepath, boolean overwrite, Map<Double, ComplexNumber> time_complex) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filepath, !overwrite))) {
             bw.write("# t mod arg\n");
