@@ -1,9 +1,8 @@
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Scanner;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.io.*;
+import java.util.stream.Collectors;
 
 /**
  * Klasa reprezentujaca liczbe zespolona dziedziczaca po klasie Vector2D
@@ -17,7 +16,6 @@ class ComplexNumber extends Vector2D {
     public ComplexNumber(double x, double y){
         super(x, y);
     }
-
     /**
      * metoda zwracajaca skladowa rzeczywista liczby zespolonej
      * @return skladowa rzeczywista liczby zespolonej
@@ -25,7 +23,6 @@ class ComplexNumber extends Vector2D {
     public double Re() {
         return getX();
     }
-
     /**
      * metoda zwracajaca skladowa urojona liczby zespolonej
      * @return skladowa urojona liczby zespolonej
@@ -33,7 +30,6 @@ class ComplexNumber extends Vector2D {
     public double Im() {
         return getY();
     }
-
     /**
      * metoda zwracajaca tekstowa reprezentacje wykladnicza liczby zespolonej
      * @return tekstowa reprezentacja wykladnicza liczby zespolonej
@@ -41,7 +37,6 @@ class ComplexNumber extends Vector2D {
     public String exp() {
         return getModule() + "e(" + getArgument() + "i)";
     }
-
     /**
      * metoda zwracajaca tekstowa reprezentacje biegunowa liczby zespolonej
      * @return tekstowa reprezentacja biegunowa liczby zespolonej
@@ -49,7 +44,6 @@ class ComplexNumber extends Vector2D {
     public String polar() {
         return "z = (" + getModule() + "," + getArgument() + ")";
     }
-
     /**
      * metoda statyczna sluzaca do dodawania dwoch liczb zespolonych
      * @param cn1 pierwsza liczba zespolona
@@ -98,7 +92,6 @@ class ComplexNumber extends Vector2D {
         double Im = (cn2.Re() * cn1.Im() - cn1.Re() * cn2.Im()) / div;
         return new ComplexNumber(Re, Im);
     }
-
     /**
      * metoda obliczajaca potege n liczby zespolonej
      * @param n potega
@@ -111,7 +104,6 @@ class ComplexNumber extends Vector2D {
         double Im = module * Math.sin(argument);
         return new ComplexNumber(Re, Im);
     }
-
     /**
      * metoda porownujaca dwie liczby zespolone
      * @param obj liczba zespolona do porownania
@@ -127,7 +119,6 @@ class ComplexNumber extends Vector2D {
         ComplexNumber compare = (ComplexNumber) obj;
         return Re() == compare.Re() && Im() == compare.Im();
     }
-
     /**
      * metoda zwracajaca tekstowa reprezentacje liczby zespolonej
      * @return reprezentacja tekstowa liczby zespolonej
@@ -136,7 +127,6 @@ class ComplexNumber extends Vector2D {
     public String toString() {
         return getX() + " + " + "i" + getY();
     }
-
     /**
      * Metoda pozwalajaca wprowadzic wartosci liczby zespolonej
      * @return nowa liczba zespolona
@@ -170,6 +160,55 @@ class ComplexNumber extends Vector2D {
             return new ComplexNumber(real, imaginary); // Tworzenie liczby zespolonej z częścią rzeczywistą i urojoną
         } else {
             throw new InvalidComplexNumberFormat("Nieprawidłowy format liczby zespolonej");
+        }
+    }
+    public static Map<Double, ComplexNumber> readFromFile(String filepath){
+        File data = new File(filepath);
+        Map<Double, ComplexNumber> time_complex = new HashMap<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(data))) {
+            String line;
+            String[] arr;
+            while ((line = br.readLine()) != null) {
+                if (line.trim().indexOf("# t x+yi") == 0)
+                    continue;
+                arr = line.split(" ");
+                String complexStr = arr[1];
+                String[] complexParts = complexStr.split("(?=[+-])");//!!!!!!
+
+                double x = 0.0;
+                double y = 0.0;
+
+                for (String part : complexParts) {
+                    if (part.contains("i")) {
+                        y = Double.parseDouble(part.replaceAll("i", ""));
+                    } else {
+                        x = Double.parseDouble(part);
+                    }
+                }
+                ComplexNumber cn = new ComplexNumber(x, y);
+                time_complex.put(Double.parseDouble(arr[0]), cn);
+            }
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        return time_complex.entrySet().stream()
+                .sorted(Map.Entry.comparingByKey())
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+                        (oldValue, newValue) -> oldValue, LinkedHashMap::new));
+    }
+    public static void saveToFile(String filepath, boolean overwrite, Map<Double, ComplexNumber> time_complex) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filepath, !overwrite))) {
+            bw.write("# t mod arg\n");
+            for (Map.Entry<Double, ComplexNumber> entry : time_complex.entrySet()) {
+                double t = entry.getKey();
+                ComplexNumber cn = entry.getValue();
+                double module = cn.getModule();
+                double argument = cn.getArgument();
+
+                bw.write(String.format("%.5f %.5f %.5f\n", t, module, argument));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
