@@ -2,5 +2,7 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Wektor2D" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Wektor2D/ZPO23-L1" vcs="Git" />
   </component>
 </project>
