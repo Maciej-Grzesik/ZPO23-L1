@@ -212,6 +212,9 @@ class ComplexNumber extends Vector2D {
      * @throws IOException podczas błedu odczytu input/output
      */
     public static void saveToFile(String filepath, boolean overwrite, Map<Double, ComplexNumber> time_complex) {
+        if (filepath.isEmpty() || filepath == null){
+            filepath = "output_data.dat";
+        }
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filepath, !overwrite))) {
             bw.write("# t mod arg\n");
             for (Map.Entry<Double, ComplexNumber> entry : time_complex.entrySet()) {
