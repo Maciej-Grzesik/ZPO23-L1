@@ -1,5 +1,3 @@
-package src;
-
 /**
  * Typ wyliczeniowy reprezentujący rodzaj zajec
  */

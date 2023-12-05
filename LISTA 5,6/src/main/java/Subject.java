@@ -1,9 +1,8 @@
-package src;
-
 /**
  * Klasa reprezentująca przedmiot w programie studiów
  */
 public class Subject {
+    private final String name;
     private final int ects;
     private final int hours;
     private final int semester;
@@ -19,7 +18,8 @@ public class Subject {
      * @param lessonType     Rodzaj lekcji (LECTURE, EXERCISES, LABORATORY).
      * @param completionType Typ zakończenia przedmiotu (EXAM, CREDIT).
      */
-    public Subject(int ects, int hours, int semester, LessonType lessonType, CompletionType completionType) {
+    public Subject(String name,int ects, int hours, int semester, LessonType lessonType, CompletionType completionType) {
+        this.name = name;
         this.ects = ects;
         this.hours = hours;
         this.semester = semester;
@@ -30,19 +30,18 @@ public class Subject {
     public LessonType getLessonType() {
         return lessonType;
     }
-
     public int getEcts() {
         return ects;
     }
-
     public int getHours() {
         return hours;
     }
-
+    public String getName(){
+        return name;
+    }
     public CompletionType getCompletionType() {
         return completionType;
     }
-
     public int getSemester() {
         return semester;
     }
