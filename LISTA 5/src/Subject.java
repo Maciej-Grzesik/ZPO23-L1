@@ -1,12 +1,14 @@
+package src;
+
 /**
  * Klasa reprezentująca przedmiot w programie studiów
  */
 public class Subject {
-    private int ects;
-    private int hours;
-    private int semester;
-    private LessonType lessonType;
-    private CompletionType completionType;
+    private final int ects;
+    private final int hours;
+    private final int semester;
+    private final LessonType lessonType;
+    private final CompletionType completionType;
 
     /**
      * Konstruktor klasy Subject
@@ -23,5 +25,25 @@ public class Subject {
         this.semester = semester;
         this.lessonType = lessonType;
         this.completionType = completionType;
+    }
+
+    public LessonType getLessonType() {
+        return lessonType;
+    }
+
+    public int getEcts() {
+        return ects;
+    }
+
+    public int getHours() {
+        return hours;
+    }
+
+    public CompletionType getCompletionType() {
+        return completionType;
+    }
+
+    public int getSemester() {
+        return semester;
     }
 }

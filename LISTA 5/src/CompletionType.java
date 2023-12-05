@@ -1,3 +1,5 @@
+package src;
+
 /**
  * Typ wyliczeniowy reprezentujący typ zaliczenia przedmiotu
  */

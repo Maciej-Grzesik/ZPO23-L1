@@ -1,10 +1,11 @@
+package src;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-
 public class Courses {
-    private Map<String, Subject> courses;
+    private final Map<String, Subject> courses;
 
     /**
      * Konstruktor klasy Courses
@@ -64,9 +65,9 @@ public class Courses {
      * @param hours nowa ilosc godzin
      * @param semester nowy semestr
      */
-    public void updateSubject(String name, String updated_name, int ects, int hours, int semester) {
+    public void updateSubject(String name, String updated_name, int ects, int hours, int semester, LessonType type, CompletionType completion) {
         if (courses.containsKey(name)) {
-            Subject updated = new Subject(ects, hours, semester);
+            Subject updated = new Subject(ects, hours, semester, type, completion);
             courses.remove(name);
             courses.put(updated_name, updated);
         } else {
